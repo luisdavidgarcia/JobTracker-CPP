@@ -1,1 +1,29 @@
 # JobTracker-CPP
+
+In effort to leverage modern C++20 features and understand how to build
+REST API's with Boost. I have opted to replicate my 
+[JobTracker](https://github.com/luisdavidgarcia/JobTracker) application in
+C++20. 
+
+I will be leveraging CMake for our build system, Docker for housing
+our PostgreSQL container and Ollama, and Clang for formatting and linting
+our project.
+
+## Structure
+
+1. `main.cpp`: Here is where the command line parse will be activated so 
+  that our program can start processing job applicaitons with Ollama and
+  saving them to the Database
+
+2. `CommandLineParser.cpp`: Here is the logic for parsing arguments and 
+    formatting them to feed into an API request for Ollama
+
+3. `OllamaAPIClient.cpp`: Here is the REST API to interact with Ollama model
+
+4. `PostgresDatabaseManager.cpp`: Contains the interface between Ollama output
+    to database
+
+5. `JobApplication.cpp`: contains the strucutre of a job application
+
+6. `JobTrackerApp.cpp`: houses teh core loop and state machince for processing
+    requests
