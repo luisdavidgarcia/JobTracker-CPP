@@ -1,0 +1,21 @@
+FROM fedora:latest
+
+WORKDIR /app
+
+RUN dnf update -y && \
+    dnf install -y \
+        vim \
+        gcc-c++ \
+        cmake \
+        boost-devel \
+        perf \
+        gdb \
+        strace \
+        valgrind \
+        ltrace \
+        make \
+        clang \
+        clang-tools-extra && \ 
+    dnf clean all
+
+CMD ["/bin/bash"]
