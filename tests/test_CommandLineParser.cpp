@@ -16,3 +16,12 @@ BOOST_AUTO_TEST_CASE(parse_model_name_success) {
   BOOST_CHECK_EQUAL(parser.getModelName(), "llama3.2");
 }
 
+BOOST_AUTO_TEST_CASE(parse_model_missing_model_args) {
+  CommandLineParser parser;
+
+  const char* argv[] = {"program", "--model"};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  std::cout << argc << std::endl;
+  
+  BOOST_CHECK_THROW(parser.parseModelName(argc, argv), std::runtime_error);
+}
