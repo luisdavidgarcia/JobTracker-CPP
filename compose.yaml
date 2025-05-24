@@ -1,0 +1,10 @@
+#  compose.yaml
+services:
+  cpp_dev_env:
+    build:
+      context: .
+      dockerfile:  Dockerfile.cppDevEnv
+    container_name: cpp_dev_env
+    command: sleep infinity
+    volumes:
+      - .:/app
