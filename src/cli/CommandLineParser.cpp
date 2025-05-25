@@ -21,7 +21,11 @@ void CommandLineParser::parseModelName(int argc, const char* argv[]) {
   }
 
   if (args.at(0) != "--model" && args.at(0) != "-m") {
-    throw std::runtime_error("Only --model/-m are allowed arguments");
+    throw std::runtime_error(
+      "Invalid argument: " + std::string(args.at(0)) + "\n"
+      "Usage: --model <model_name> or -m <model_name>\n"
+      "       Example: --model MyModel or -m MyModel\n"
+      "You can only use --model or -m to specify the model.");
   }
 
   // TODO: Verify with a set that modelName_ is valid
