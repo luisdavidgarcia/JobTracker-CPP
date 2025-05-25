@@ -15,15 +15,18 @@ our project.
   that our program can start processing job applicaitons with Ollama and
   saving them to the Database
 
-2. `CommandLineParser.cpp`: Here is the logic for parsing arguments and 
-    formatting them to feed into an API request for Ollama
-
-3. `OllamaAPIClient.cpp`: Here is the REST API to interact with Ollama model
+3. `FASTAPIClient.cpp`: Here is the REST API to interact with FASTAPI python
+    service housing the spacy model
 
 4. `PostgresDatabaseManager.cpp`: Contains the interface between Ollama output
     to database
 
 5. `JobApplication.hpp`: contains the strucutre of a job application
 
-6. `JobTrackerApp.cpp`: houses teh core loop and state machince for processing
+6. `JobTrackerApp.cpp`: houses the core loop and state machince for processing
     requests
+
+## Resources
+
+1. [Boost Unit Testing](https://www.boost.org/doc/libs/latest/libs/test/doc/html/index.html)
+2. [spaCy](https://spacy.io/)
