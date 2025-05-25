@@ -12,6 +12,12 @@ void CommandLineParser::parseModelName(int argc, const char* argv[]) {
     return;
   }
 
+  if (args.size() != 2) {
+    throw std::runtime_error(
+      "Usage: --model <model_name> or -m <model_name>\n"
+      "       Example: --model MyModel or -m MyModel\n"
+      "You must specify a model name after --model or -m.\n"
+    );
   }
 
   if (args.at(0) != "--model" && args.at(0) != "-m") {
