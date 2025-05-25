@@ -30,3 +30,4 @@ our project.
 
 1. [Boost Unit Testing](https://www.boost.org/doc/libs/latest/libs/test/doc/html/index.html)
 2. [spaCy](https://spacy.io/)
+3. [FastAPI](https://github.com/fastapi/fastapi)
