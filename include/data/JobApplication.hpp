@@ -5,6 +5,8 @@
 #include <vector>
 #include <chrono>
 
+struct JobApplication;
+
 struct JobApplication {
   int id = -1;
   std::string company_name;
