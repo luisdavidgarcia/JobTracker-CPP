@@ -28,6 +28,11 @@ void CommandLineParser::parseModelName(int argc, const char* argv[]) {
       "You can only use --model or -m to specify the model.");
   }
 
-  // TODO: Verify with a set that modelName_ is valid
-  modelName_ = std::string(args.at(1));
+  if (acceptedModels_.contains(args.at(1))) {
+    modelName_ = std::string(args.at(1));
+  } else {
+    throw std::runtime_error(
+      "Invalid  model: " + std::string(args.at(1)) + "\n"
+    );
+  }
 }
