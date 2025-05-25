@@ -3,19 +3,16 @@
 
 #include <iostream>
 
-#include "cli/CommandLineParser.hpp"
+#include "llm/FastAPIClient.hpp"
 #include "db/PostgresDatabaseManager.hpp"
-#include "llm/OllamaAPIClient.hpp"
 
 class JobTracker {
 public:
-  JobTracker(int argc, char* argv[]);
-
+  JobTracker() : fastAPI_(), databaseManager_() {}
   void run();
 
 private:
-  CommandLineParser commandParser_;
-  OllamaAPIClient ollamaLLM_;
+  FastAPIClient fastAPI_;
   PostgresDatabaseManager databaseManager_;
 };
 
