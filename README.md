@@ -23,7 +23,7 @@ our project.
 4. `PostgresDatabaseManager.cpp`: Contains the interface between Ollama output
     to database
 
-5. `JobApplication.cpp`: contains the strucutre of a job application
+5. `JobApplication.hpp`: contains the strucutre of a job application
 
 6. `JobTrackerApp.cpp`: houses teh core loop and state machince for processing
     requests
