@@ -1,21 +1,16 @@
 #ifndef OLLAMAPICLIENT_HPP
 #define OLLAMAPICLIENT_HPP
 
-static constexper int DEFAULT_PORT_NUMBER = 11434;
+#include "data/JobApplication.hpp"
 
 class OllamaAPIClient {
 public:
-  OllamaAPIClient(PostgresDatabaseManager& db, JobApplication& jobApp)
-    : databaseManager_(db), jobApplication_(jobApp) {}
-
-  void processJobDescription();
+  JobApplication generateJobDescriptionFromText(const std::string& jobDesc);
 
 private:
-  int portNumber_ = DEFAULT_PORT_NUMBER;
-  PostgresDatabaseManager& databaseManager_;
-  JobApplication& jobApplication_;
+  static constexpr int DEFAULT_PORT_NUMBER = 11434;
 
-  void storeJobApplication();
+  int portNumber_ = DEFAULT_PORT_NUMBER;
 };
 
 #endif // OLLAMAPICLIENT_HPP
