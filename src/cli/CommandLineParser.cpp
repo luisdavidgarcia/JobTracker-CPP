@@ -7,8 +7,10 @@ const std::unordered_set<std::string_view> CommandLineParser::acceptedModels_{
 void CommandLineParser::parseModelName(int argc, const char* argv[]) {
   const std::vector<std::string_view> args(argv + 1, argv + argc);
 
-  if (args.size() != 2) {
-    throw std::runtime_error("Usage: --model <model_name>");
+  // Will accept the default modelName_
+  if (args.empty()) {
+    return;
+  }
 
   }
 
