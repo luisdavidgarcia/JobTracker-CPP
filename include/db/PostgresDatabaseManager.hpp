@@ -1,9 +1,8 @@
-#ifndef JOBAPPLICATION_HPP
-#define JOBAPPLICATION_HPP
+#ifndef POSTGRESDATABASEMANAGER_HPP
+#define POSTGRESDATABASEMANAGER_HPP
 
 #include "data/JobApplication.hpp"
-
-struct JobApplication;
+#include <pqxx/pqxx>
 
 class PostgresDatabaseManager {
 public:
@@ -17,4 +16,4 @@ private:
   void craftQuery();
 };
 
-#endif // JOBAPPLICATION_HPP
+#endif // POSTGRESDATABASEMANAGER_HPP
