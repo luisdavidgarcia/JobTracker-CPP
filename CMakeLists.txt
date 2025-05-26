@@ -6,7 +6,7 @@ project(JobTracker VERSION 1.0)
 
 find_package(Boost REQUIRED)
 
-file(GLOB_RECURSE PROJECT_SOURCES ${CMAKE_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE PROJECT_SOURCES ${CMAKE_SOURCE_DIR}/src/cpp/*.cpp)
 
 add_executable(JobTracker ${PROJECT_SOURCES})
 
