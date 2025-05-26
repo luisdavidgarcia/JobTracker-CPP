@@ -9,12 +9,13 @@ struct JobApplication;
 
 struct JobApplication {
   int id = -1;
-  std::string company_name;
-  std::string position_title;
-  std::chrono::year_month_day applied_date;
-  std::string salary_range;
-  std::string company_challenge;
-  std::vector<std::string> required_skills;
+  std::string companyName;
+  std::string positionTitle;
+  std::chrono::year_month_day appliedDate;
+  int maxSalary = 0;
+  std::string companyChallenge;
+  std::vector<std::string> requiredSkills;
+  std::string jobRequirements;
 };
 
 #endif // JOBAPPLICATION_HPP
