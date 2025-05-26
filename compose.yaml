@@ -3,8 +3,30 @@ services:
   cpp_dev_env:
     build:
       context: .
-      dockerfile:  Dockerfile.cppDevEnv
+      dockerfile: Dockerfile.cpp-dev-env
     container_name: cpp_dev_env
     command: sleep infinity
     volumes:
       - .:/app
+    depends_on:
+      - db
+
+  fastapi_ner_spacy:
+    build:
+      context: .
+      dockerfile: Dockerfile.spacy-ner
+    container_name: spacy_ner_app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+  db:
+    image: postgres:15
+    container_name: job_tracker_db
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
