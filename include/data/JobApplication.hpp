@@ -5,8 +5,6 @@
 #include <vector>
 #include <chrono>
 
-struct JobApplication;
-
 struct JobApplication {
   int id = -1;
   std::string companyName;
@@ -14,7 +12,7 @@ struct JobApplication {
   std::chrono::year_month_day appliedDate;
   int maxSalary = 0;
   std::string companyChallenge;
-  std::vector<std::string> requiredSkills;
+  std::string requiredSkills;
   std::string jobRequirements;
 };
 
