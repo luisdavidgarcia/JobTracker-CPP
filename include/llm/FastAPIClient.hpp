@@ -3,6 +3,13 @@
 
 #include "data/JobApplication.hpp"
 
+#include <boost/beast/core.hpp>
+#include <boost/beast/http.hpp>
+#include <boost/beast/version.hpp>
+#include <boost/asio/connect.hpp>
+#include <boost/asio/ip/tcp.hpp>
+#include <iostream>
+
 class FastAPIClient {
 public:
   void sendJobDescription(const std::string& jobDescription);
