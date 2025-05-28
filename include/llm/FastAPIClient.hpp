@@ -19,8 +19,18 @@ public:
   auto sendJobDescription(const std::string& jobDescription) -> void;
 
 private:
-  static  constexpr int DEFAULT_PORT_NUMBER = 8000;
-  int portNumber_ = DEFAULT_PORT_NUMBER;
+  inline static const std::string DEFAULT_HOST = "fastapi_ner_spacy";
+  inline static const std::string DEFAULT_PORT = "8000";
+  inline static const std::string DEFAULT_TARGET = "/job_description";
+  inline static constexpr int DEFAULT_VERSION = 11;
+
+  std::string host_ = DEFAULT_HOST;
+  std::string port_ = DEFAULT_PORT;
+  std::string target_ = DEFAULT_TARGET;
+  int version_ = DEFAULT_VERSION;
+  
+  boost::asio::ip::tcp::resolver resolver_;
+  boost::beast::tcp_stream stream_;
 };
 
 #endif // FASTAPICLIENT_HPP
