@@ -2,44 +2,6 @@ FROM fedora:latest
 
 WORKDIR /app
 
-RUN dnf update -y && \
-    dnf install -y \
-        vim \
-        gcc-c++ \
-        cmake \
-        boost-devel \
-        libpq-devel \
-        wget \
-        pkgconf \
-        perf \
-        awk \
-        gdb \
-        strace \
-        valgrind \
-        ltrace \
-        make \
-        clang \
-        clang-tools-extra && \ 
-    wget https://github.com/jtv/libpqxx/archive/refs/tags/7.10.1.tar.gz && \
-    tar xvfz 7.10.1.tar.gz && \
-    cd libpqxx-7.10.1 && \
-    ./configure && \
-    make  && \
-    make install && \
-    cd /app && \
-    rm -rf libpqxx-7.10.1.tar.gz libpqxx-7.10.1 && \
-    dnf clean all && \
-    Yes, you can absolutely add that `export PKG_CONFIG_PATH` in your Dockerfile to ensure that `pkg-config` can find the `libpqxx` package configuration file, especially since you're installing `libpqxx` manually from source.
-
-Here's how you can modify your Dockerfile to include that environment variable:
-
-### Updated Dockerfile:
-
-```dockerfile
-FROM fedora:latest
-
-WORKDIR /app
-
 # Install dependencies and tools
 RUN dnf update -y && \
     dnf install -y \
@@ -67,8 +29,8 @@ RUN dnf update -y && \
     make install && \
     cd /app && \
     rm -rf libpqxx-7.10.1.tar.gz libpqxx-7.10.1 && \
-    dnf clean all && \
-    # Set PKG_CONFIG_PATH to the directory containing the .pc files
-    echo "export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:\$PKG_CONFIG_PATH" >> /etc/profile
+    dnf clean all
+
+ENV PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH}"
 
 CMD ["/bin/bash"]
