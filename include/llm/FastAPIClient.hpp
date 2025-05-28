@@ -12,8 +12,11 @@
 
 class FastAPIClient {
 public:
-  void sendJobDescription(const std::string& jobDescription);
-  void recvJobDescriptionJson();
+  FastAPIClient(boost::asio::io_context& ioc) 
+    : resolver_(ioc), stream_(ioc) {}
+  auto connect() -> void;
+  auto close() -> void;
+  auto sendJobDescription(const std::string& jobDescription) -> void;
 
 private:
   static  constexpr int DEFAULT_PORT_NUMBER = 8000;
