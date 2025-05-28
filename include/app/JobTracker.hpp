@@ -11,12 +11,16 @@
 
 class JobTracker {
 public:
-  JobTracker() : fastAPI_(), databaseManager_() {}
-  void run();
+  JobTracker() : ioc_(), fastAPI_(ioc_), databaseManager_() {}
+  auto run() -> void;
 
 private:
+  boost::asio::io_context ioc_;
   FastAPIClient fastAPI_;
   PostgresDatabaseManager databaseManager_;
+
+  [[nodiscard]] auto inputJobDescription() -> std::string;
+  [[nodiscard]] auto askTOContinue() -> bool; 
 };
 
 #endif // JOBTRACKER_HPP
