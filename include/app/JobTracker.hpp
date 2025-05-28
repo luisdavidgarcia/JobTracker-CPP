@@ -4,6 +4,8 @@
 #include <iostream>
 #include <limits>
 #include <boost/asio/io_context.hpp>
+#include <boost/json.hpp>
+#include <optional>
 
 #include "llm/FastAPIClient.hpp"
 #include "db/PostgresDatabaseManager.hpp"
