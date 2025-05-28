@@ -4,10 +4,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(JobTracker VERSION 1.0)
 
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED COMPONENTS json)
 find_package(PostgreSQL REQUIRED)
 find_package(PkgConfig REQUIRED)
-
 pkg_search_module(LIBPQXX REQUIRED libpqxx)
 
 file(GLOB_RECURSE PROJECT_SOURCES ${CMAKE_SOURCE_DIR}/src/cpp/*.cpp)
@@ -21,6 +20,7 @@ target_include_directories(JobTracker PRIVATE ${LIBPQXX_INCLUDE_DIRS})
 target_link_libraries(JobTracker PRIVATE
   ${LIBPQXX_LIBRARIES} 
   ${PostgreSQL_LIBRARIES}
+  Boost::json
 )
 
 set(COMMON_FLAGS "-Wall -Werror")
