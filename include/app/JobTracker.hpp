@@ -10,7 +10,6 @@
 #include "llm/FastAPIClient.hpp"
 #include "db/PostgresDatabaseManager.hpp"
 
-
 class JobTracker {
 public:
   JobTracker() : ioc_(), fastAPI_(ioc_), databaseManager_() {}
