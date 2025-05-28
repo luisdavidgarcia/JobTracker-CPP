@@ -8,6 +8,8 @@
 #include <boost/beast/version.hpp>
 #include <boost/asio/connect.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/json.hpp>
+#include <optional>
 #include <iostream>
 
 class FastAPIClient {
@@ -16,7 +18,8 @@ public:
     : resolver_(ioc), stream_(ioc) {}
   auto connect() -> void;
   auto close() -> void;
-  auto sendJobDescription(const std::string& jobDescription) -> void;
+  auto sendJobDescription(const std::string& jobDescription) 
+    -> std::optional<boost::json::object>;
 
 private:
   inline static const std::string DEFAULT_HOST = "fastapi_ner_spacy";
