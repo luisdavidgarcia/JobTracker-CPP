@@ -2,6 +2,8 @@
 #define JOBTRACKER_HPP
 
 #include <iostream>
+#include <limits>
+#include <locale>
 
 #include "llm/FastAPIClient.hpp"
 #include "db/PostgresDatabaseManager.hpp"
