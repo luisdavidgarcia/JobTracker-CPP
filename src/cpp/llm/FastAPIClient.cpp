@@ -9,3 +9,11 @@ auto FastAPIClient::connect() -> void {
   stream_.connect(results);
 }
 
+auto FastAPIClient::close() -> void {
+  boost::beast::error_code ec;
+  stream_.socket().shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
+
+  if (ec && ec != boost::beast::errc::not_connected)
+    throw boost::beast::system_error{ec};
+}
+
