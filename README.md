@@ -32,3 +32,5 @@ our project.
 2. [spaCy](https://spacy.io/)
 3. [FastAPI](https://github.com/fastapi/fastapi)
 4. [libpqxx](https://github.com/jtv/libpqxx)
+5. [Docker Networking](https://www.netmaker.io/resources/docker-compose-network)
+6. [Boost Json Conversions](https://www.boost.org/doc/libs/latest/libs/json/doc/html/json/conversion/custom_conversions.html)
