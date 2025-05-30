@@ -4,8 +4,14 @@ auto JobTracker::run() -> void {
   fastAPI_.connect();
   
   while (true) {
-    const std::string jobDescription = inputJobDescription();
-    fastAPI_.sendJobDescription(jobDescription);
+    const auto description = inputJobDescription();
+    if (const std::optional<JobApplication> response = 
+        fastAPI_.sendJobDescription(description)) 
+    {
+      databaseManager_.insertJobApplication(response.value());
+    } else {
+      std::cerr << "Empty result received.\n";
+    }
     
     if (!askTOContinue()) break; 
     
