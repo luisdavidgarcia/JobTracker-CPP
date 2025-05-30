@@ -34,3 +34,7 @@ our project.
 4. [libpqxx](https://github.com/jtv/libpqxx)
 5. [Docker Networking](https://www.netmaker.io/resources/docker-compose-network)
 6. [Boost Json Conversions](https://www.boost.org/doc/libs/latest/libs/json/doc/html/json/conversion/custom_conversions.html)
+7. [Boost Json Overloads](https://www.boost.org/doc/libs/latest/libs/json/doc/html/json/conversion/custom_conversions.html)
+8. [Boost Json](https://www.boost.org/doc/libs/latest/libs/json/doc/html/index.html)
+9. [Boost Beast](https://www.boost.org/doc/libs/latest/libs/beast/doc/html/index.html)
+10. [Boost Asio](https://www.boost.org/doc/libs/1_73_0/doc/html/boost_asio/overview.html)
