@@ -18,7 +18,7 @@ auto FastAPIClient::close() -> void {
 }
 
 auto FastAPIClient::sendJobDescription(const std::string& jobDescription) 
-  -> std::optional<boost::json::object>
+  -> std::optional<JobApplication>
 {
   boost::beast::http::request<boost::beast::http::string_body> req{
     boost::beast::http::verb::post, 
@@ -40,11 +40,11 @@ auto FastAPIClient::sendJobDescription(const std::string& jobDescription)
   boost::beast::http::read(stream_, buffer, res);
 
   if (res.result() == boost::beast::http::status::ok) {
-    auto jsonResult = boost::json::parse(
+    boost::json::value jsonResult = boost::json::parse(
       boost::beast::buffers_to_string(res.body().data())
     );
-    std::cout << boost::json::serialize(jsonResult) << "\n";
-    return jsonResult.as_object();
+    
+    return boost::json::value_to<JobApplication>(jsonResult);
   } else {
     std::cerr << "Failed to send or recieve response: " << res.result_int()
       << " (" << res.reason() << ")\n";
