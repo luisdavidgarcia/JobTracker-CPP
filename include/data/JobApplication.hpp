@@ -21,4 +21,20 @@ public:
   std::string formatDate() const;
 };
 
+namespace boost {
+namespace json {
+
+std::chrono::year_month_day tag_invoke(
+  const value_to_tag<std::chrono::year_month_day>&, 
+  value const& jv
+);
+
+JobApplication tag_invoke(
+  const value_to_tag<JobApplication>&, 
+  value const& jv
+);
+
+} // namespace json
+} // namespace boost
+
 #endif // JOBAPPLICATION_HPP
