@@ -12,12 +12,11 @@
 
 class JobTracker {
 public:
-  JobTracker() : ioc_(), fastAPI_(ioc_), databaseManager_() {}
   auto run() -> void;
 
 private:
   boost::asio::io_context ioc_;
-  FastAPIClient fastAPI_;
+  FastAPIClient fastAPI_{ioc_};
   PostgresDatabaseManager databaseManager_;
 
   [[nodiscard]] auto inputJobDescription() -> std::string;
