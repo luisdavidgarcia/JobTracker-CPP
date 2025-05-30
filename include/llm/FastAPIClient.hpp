@@ -1,8 +1,6 @@
 #ifndef FASTAPICLIENT_HPP
 #define FASTAPICLIENT_HPP
 
-#include "data/JobApplication.hpp"
-
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
@@ -12,6 +10,8 @@
 #include <optional>
 #include <iostream>
 
+#include "data/JobApplication.hpp"
+
 class FastAPIClient {
 public:
   FastAPIClient(boost::asio::io_context& ioc) 
@@ -19,7 +19,7 @@ public:
   auto connect() -> void;
   auto close() -> void;
   auto sendJobDescription(const std::string& jobDescription) 
-    -> std::optional<boost::json::object>;
+    -> std::optional<JobApplication>;
 
 private:
   inline static const std::string DEFAULT_HOST = "fastapi_ner_spacy";
