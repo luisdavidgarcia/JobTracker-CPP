@@ -4,7 +4,6 @@ CREATE TABLE jobs (
     position_title TEXT NOT NULL,
     applied_date DATE,
     max_salary INTEGER,
-    company_challenge TEXT,
     required_skills TEXT,
-    job_requirements TEXT
+    responsibilities TEXT
 );
