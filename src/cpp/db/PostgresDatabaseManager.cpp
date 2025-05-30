@@ -10,19 +10,14 @@ auto PostgresDatabaseManager::insertJobApplication(const JobApplication& job)
   pqxx::connection cx(*dbURL);
   pqxx::work tx(cx);
 
-  auto formattedDate = std::format("{:04}-{:02}-{:02}",
-    static_cast<int>(job.appliedDate.year()),
-    static_cast<unsigned int>(job.appliedDate.month()),
-    static_cast<unsigned int>(job.appliedDate.day()));
-
   std::string sql = "INSERT INTO jobs (company_name, position_title," 
-                    " applied_date, max_salary, company_challenge,"
-                    " required_skills, job_requirements)"
+                    " applied_date, max_salary, required_skills, "
+                    " job_responsibilities)"
                     " VALUES ($1, $2, $3, $4, $5, $6, $7)";
 
-  tx.exec(sql, {job.companyName, job.positionTitle, formattedDate, 
-                job.maxSalary, job.companyChallenge, job.requiredSkills, 
-                job.jobRequirements});
+  tx.exec(sql, {job.companyName, job.positionTitle, job.formatDate(), 
+                job.maxSalary, job.requiredSkills, 
+                job.responsibilities});
   
   tx.commit();
 
