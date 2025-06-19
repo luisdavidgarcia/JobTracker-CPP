@@ -6,6 +6,7 @@
 #include <boost/asio/io_context.hpp>
 #include <boost/json.hpp>
 #include <optional>
+#include <string_view>
 
 #include "llm/FastAPIClient.hpp"
 #include "db/PostgresDatabaseManager.hpp"
@@ -21,6 +22,8 @@ private:
 
   [[nodiscard]] auto inputJobDescription() -> std::string;
   [[nodiscard]] auto askTOContinue() -> bool; 
+
+  static constexpr std::string_view SENTINEL{"__DONE__"};
 };
 
 #endif // JOBTRACKER_HPP
