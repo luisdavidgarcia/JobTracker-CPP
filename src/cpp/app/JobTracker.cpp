@@ -25,12 +25,16 @@ auto JobTracker::run() -> void {
 
 [[nodiscard]]
 auto JobTracker::inputJobDescription() -> std::string {
-  std::cout << "Enter you job description and press CTRL+D after:\n\n";
+  std::cout << "Enter the job description.\n";
+  std::cout << "When you are finished, type '" << SENTINEL; 
+  std::cout << "' on a new line and press Enter.\n\n";
 
   std::string jobDescription{};
   std::string line{};
   
   while (std::getline(std::cin, line)) {
+    if (line == SENTINEL) break;
+    
     jobDescription += line + "\n";
   }
 
@@ -40,8 +44,9 @@ auto JobTracker::inputJobDescription() -> std::string {
 [[nodiscard]]
 auto JobTracker::askTOContinue() -> bool {
   for (std::string response; ;) {
-    std::cout << "Do you wish to continue? (y/n): ";
+    std::cout << "\nDo you wish to continue? (y/n): ";
     std::cin >> response;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     if (response.size() == 1) {
       switch (std::tolower(response.front())) {
