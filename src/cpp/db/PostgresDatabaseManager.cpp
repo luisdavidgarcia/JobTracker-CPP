@@ -11,9 +11,9 @@ auto PostgresDatabaseManager::insertJobApplication(const JobApplication& job)
   pqxx::work tx(cx);
 
   std::string sql = "INSERT INTO jobs (company_name, position_title," 
-                    " applied_date, max_salary, required_skills, "
-                    " job_responsibilities)"
-                    " VALUES ($1, $2, $3, $4, $5, $6, $7)";
+                    " applied_date, max_salary, required_skills,"
+                    " responsibilities)"
+                    " VALUES ($1, $2, $3, $4, $5, $6)";
 
   tx.exec(sql, {job.companyName, job.positionTitle, job.formatDate(), 
                 job.maxSalary, job.requiredSkills, 
