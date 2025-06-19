@@ -9,6 +9,26 @@ I will be leveraging CMake for our build system, Docker for housing
 our PostgreSQL container and Ollama, and Clang for formatting and linting
 our project.
 
+## Getting Started
+
+To run JobTracker do the following:
+
+```sh
+docker compose up -d \
+docker compose ps -a \ # To ensure none of the containers have "Exited"
+
+docker exec -it cpp_dev_env /bin/bash \ # Permit us to run in bash
+
+mkdir build \
+cd build \
+cmake .. \
+cmake --build . \
+
+./JobTracker
+
+docker compose down # When you are done of if one of the containers failed
+```
+
 ## Structure
 
 1. `main.cpp`: Here is where the command line parse will be activated so 
