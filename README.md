@@ -15,7 +15,7 @@ our project.
 
 ### Prerequisites
 
-1.First and foremost install `Docker` on your system.
+1.First and foremost install `Docker` on your system. Follow Docker's [instructions](https://docs.docker.com/engine/install/)
 - Docker
 - Docker Compose
 - Within these containers the following software will be included:
