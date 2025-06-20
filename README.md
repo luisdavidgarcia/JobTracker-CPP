@@ -15,6 +15,7 @@ our project.
 
 ### Prerequisites
 
+1.First and foremost install `Docker` on your system.
 - Docker
 - Docker Compose
 - Within these containers the following software will be included:
@@ -31,6 +32,19 @@ our project.
   - libpq-devel
   - gdb
   - valgrind
+
+2.  Create a `.env` file in the project root with the following variables:
+
+```sh
+POSTGRES_USER=your_username
+POSTGRES_PASSWORD=your_password
+POSTGRES_DB=your_database_name
+DB_HOST=localhost
+DB_PORT=5432
+DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:${DB_PORT}/${POSTGRES_DB}"
+```
+
+### Running
 
 To run JobTracker in Linux/MacOS run the following commands in your terminal:
 
@@ -77,6 +91,13 @@ graph TD
     C-- 4.INSERT Query -->P
 ```
 
+1. Internally C++ Client of JobTracker establishes a connection with the
+   Database and FastAPI backend
+2. Obtain the pasted Job Application from C++ Command Line Component and
+   submit post request to FastAPI backend to process it
+3. Retrieve the process Job Application as JSON in the C++ Client
+4. Submit the JSON Job Application into the Database
+
 ### Directory and File Structure
 
 ```
@@ -120,25 +141,24 @@ graph TD
     └── pasteJobDescription_test.cpp
 ```
 
-### Files Explained Simply
+#### Core Files Explained Simply
 
 1. `src/cpp/app/JobTracker.cpp`: This is the main program which contains the core logic for
     accepting pasted Job Applications, requesting the FastAPI backend to process it with Spacy,
     and saving the returned parsed JSON data to the Postgres database.
-1. `src/cpp/data/JobApplication.cpp`: Contains the data structure that encapsulates a Job
+2. `src/cpp/data/JobApplication.cpp`: Contains the data structure that encapsulates a Job
    Application with fields specified in `init.sql`
-1. `src/cpp/db/PostgresDatabaseManager.cpp`: Contains the libpqxx interface and logic to submit
+3. `src/cpp/db/PostgresDatabaseManager.cpp`: Contains the libpqxx interface and logic to submit
    parsed, JSON applications to the database
-1. `src/cpp/llm/FastAPIClient.cpp`: Serves as the backbone for creating POST requests to the
+4. `src/cpp/llm/FastAPIClient.cpp`: Serves as the backbone for creating POST requests to the
    FastAPI backend to process raw plain text Job Application
-1. `src/cpp/utils/EnvrionmentConfig.cpp`: Parses your `.env` file for enviroment variables which
+5. `src/cpp/utils/EnvrionmentConfig.cpp`: Parses your `.env` file for enviroment variables which
    are used for interacting and setting up the database
-1. `src/python/main.py`: Creates the FastAPI backend which accepts POST requests and processes
+6. `src/python/main.py`: Creates the FastAPI backend which accepts POST requests and processes
     them into formatted JSON Job Application objects with the Natural Language Processing (NLP)
     utility `JobProcessor`
-1. `src/python/nlp_utils.py`: Homes the `JobProcessor` class that executes the parsing logic to
+7. `src/python/nlp_utils.py`: Homes the `JobProcessor` class that executes the parsing logic to
     parse the raw plain text Job Application into a JSON format   
-
 
 ## Resources
 
