@@ -1,5 +1,7 @@
 # JobTracker-CPP
 
+![JobTracker-Logo](logo.jpeg)
+
 In effort to leverage modern C++20 features and understand how to build
 REST API's with Boost. I have opted to replicate my 
 [JobTracker](https://github.com/luisdavidgarcia/JobTracker) application in
@@ -11,13 +13,34 @@ our project.
 
 ## Getting Started
 
-To run JobTracker do the following:
+### Prerequisites
+
+- Docker
+- Docker Compose
+- Within these containers the following software will be included:
+  - C++20
+  - PostgreSQL
+  - Python 3.11+
+    - fastapi
+    - spacy
+    - uvicorn
+  - libpqxx
+  - clang
+  - cmake
+  - boost-devel
+  - libpq-devel
+  - gdb
+  - valgrind
+
+To run JobTracker in Linux/MacOS run the following commands in your terminal:
 
 ```sh
 docker compose up -d \
-docker compose ps -a \ # To ensure none of the containers have "Exited"
+# To ensure none of the containers have "Exited"
+docker compose ps -a \
 
-docker exec -it cpp_dev_env /bin/bash \ # Permit us to run in bash
+# Permits us to run the C++ Env in a Bash Shell
+docker exec -it cpp_dev_env /bin/bash \
 
 mkdir build \
 cd build \
@@ -26,25 +49,79 @@ cmake --build . \
 
 ./JobTracker
 
-docker compose down # When you are done of if one of the containers failed
+# Turn off and clean up all of the containers
+docker compose down
 ```
 
 ## Structure
 
-1. `main.cpp`: Here is where the command line parse will be activated so 
-  that our program can start processing job applicaitons with Ollama and
-  saving them to the Database
+### System Architecture
 
-3. `FASTAPIClient.cpp`: Here is the REST API to interact with FASTAPI python
-    service housing the spacy model
+```mermaid
+graph TD
+    subgraph "C++ Client & CLI"
+        C[C++ Client App]
+    end
 
-4. `PostgresDatabaseManager.cpp`: Contains the interface between Ollama output
-    to database
+    subgraph "FastAPI Spacy Backend"
+        F[FastAPI Spacy App]
+    end
 
-5. `JobApplication.hpp`: contains the strucutre of a job application
+    subgraph "Postgres Database"
+        P[(Postgres DB)]
+    end
 
-6. `JobTrackerApp.cpp`: houses the core loop and state machince for processing
-    requests
+    C-- 1.Connect (libpqxx) -->P
+    C-- 2.POST /process_job -->F
+    F-- 3.JSON Response -->C
+    C-- 4.INSERT Query -->P
+```
+
+### Directory and File Structure
+
+```
+.
+├── CMakeLists.txt
+├── compose.yaml
+├── Dockerfile.cpp-dev-env
+├── Dockerfile.spacy-ner
+├── include
+│   ├── app
+│   │   └── JobTracker.hpp
+│   ├── data
+│   │   └── JobApplication.hpp
+│   ├── db
+│   │   └── PostgresDatabaseManager.hpp
+│   ├── llm
+│   │   └── FastAPIClient.hpp
+│   └── utils
+│       └── EnvironmentConfig.hpp
+├── init.sql
+├── README.md
+├── requirements.txt
+├── src
+│   ├── cpp
+│   │   ├── app
+│   │   │   └── JobTracker.cpp
+│   │   ├── data
+│   │   │   └── JobApplication.cpp
+│   │   ├── db
+│   │   │   └── PostgresDatabaseManager.cpp
+│   │   ├── llm
+│   │   │   └── FastAPIClient.cpp
+│   │   ├── main.cpp
+│   │   └── utils
+│   │       └── EnviromentConfig.cpp
+│   └── python
+│       ├── main.py
+│       └── nlp_utils.py
+└── tests
+    ├── CMakeLists.txt
+    └── pasteJobDescription_test.cpp
+```
+
+
+
 
 ## Resources
 
