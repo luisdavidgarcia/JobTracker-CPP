@@ -1,4 +1,4 @@
-# JobTracker-CPP
+# JobTracker-CPP 💼
 
 ![JobTracker-Logo](logo.jpeg)
 
@@ -120,7 +120,24 @@ graph TD
     └── pasteJobDescription_test.cpp
 ```
 
+### Files Explained Simply
 
+1. `src/cpp/app/JobTracker.cpp`: This is the main program which contains the core logic for
+    accepting pasted Job Applications, requesting the FastAPI backend to process it with Spacy,
+    and saving the returned parsed JSON data to the Postgres database.
+1. `src/cpp/data/JobApplication.cpp`: Contains the data structure that encapsulates a Job
+   Application with fields specified in `init.sql`
+1. `src/cpp/db/PostgresDatabaseManager.cpp`: Contains the libpqxx interface and logic to submit
+   parsed, JSON applications to the database
+1. `src/cpp/llm/FastAPIClient.cpp`: Serves as the backbone for creating POST requests to the
+   FastAPI backend to process raw plain text Job Application
+1. `src/cpp/utils/EnvrionmentConfig.cpp`: Parses your `.env` file for enviroment variables which
+   are used for interacting and setting up the database
+1. `src/python/main.py`: Creates the FastAPI backend which accepts POST requests and processes
+    them into formatted JSON Job Application objects with the Natural Language Processing (NLP)
+    utility `JobProcessor`
+1. `src/python/nlp_utils.py`: Homes the `JobProcessor` class that executes the parsing logic to
+    parse the raw plain text Job Application into a JSON format   
 
 
 ## Resources
