@@ -1,0 +1,44 @@
+FROM fedora:latest
+
+WORKDIR /app
+
+# Install dependencies and tools
+RUN dnf update -y && \
+    dnf install -y \
+        vim \
+        gcc-c++ \
+        cmake \
+        boost-devel \
+        libpq-devel \
+        wget \
+        pkgconf \
+        perf \
+        awk \
+        gdb \
+        strace \
+        valgrind \
+        ltrace \
+        make \
+        clang \
+        clang-tools-extra && \ 
+    wget https://github.com/jtv/libpqxx/archive/refs/tags/7.10.1.tar.gz && \
+    tar xvfz 7.10.1.tar.gz && \
+    cd libpqxx-7.10.1 && \
+    ./configure && \
+    make  && \
+    make install && \
+    cd /app && \
+    rm -rf libpqxx-7.10.1.tar.gz libpqxx-7.10.1 && \
+    dnf clean all
+
+ENV PKG_CONFIG_PATH="/usr/local/lib/pkgconfig:${PKG_CONFIG_PATH}"
+
+COPY . .
+
+RUN rm -rf build \
+    && mkdir build \
+    && cd build \
+    && cmake .. \
+    && cmake --build .
+
+CMD ["/bin/bash"]
