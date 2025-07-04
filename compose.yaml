@@ -1,13 +1,11 @@
 #  compose.yaml
 services:
-  cpp_dev_env:
+  cpp_prod:
+    env_file: ".env"
     build:
       context: .
-      dockerfile: Dockerfile.cpp-dev-env
-    container_name: cpp_dev_env
-    command: sleep infinity
-    volumes:
-      - .:/app
+      dockerfile: Dockerfile.cpp-prod
+    container_name: cpp_prod
     depends_on:
       - db
     networks:
@@ -27,7 +25,7 @@ services:
 
   db:
     image: postgres:15
-    container_name: job_tracker_db
+    container_name: jobtracker_db
     env_file:
       - .env
     ports:
