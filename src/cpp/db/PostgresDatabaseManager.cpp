@@ -3,11 +3,12 @@
 auto PostgresDatabaseManager::insertJobApplication(const JobApplication& job) 
   -> void 
 {
-  auto dbURL = getEnvVar("DATABASE_URL");
+  // Docker container will set this environment variable
+  auto dbURL = std::getenv("DATABASE_URL");
   if (!dbURL) {
     throw std::runtime_error("Enviroment variable DATABASE_URL is not set!");
   }
-  pqxx::connection cx(*dbURL);
+  pqxx::connection cx(dbURL);
   pqxx::work tx(cx);
 
   std::string sql = "INSERT INTO jobs (company_name, position_title," 
@@ -22,13 +23,4 @@ auto PostgresDatabaseManager::insertJobApplication(const JobApplication& job)
   tx.commit();
 
   std::cout << "New job entry added successfully!" << std::endl;
-}
-
-auto PostgresDatabaseManager::getEnvVar(std::string_view key) 
-  -> std::optional<std::string> 
-{
-  if (const char* val = std::getenv(key.data())) {
-    return std::string{val};
-  }
-  return std::nullopt;
 }
