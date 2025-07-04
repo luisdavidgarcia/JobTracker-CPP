@@ -35,5 +35,5 @@ option(ENABLE_TESTING "Enable unit tests" OFF)
 
 if(ENABLE_TESTING)
   enable_testing()
-  add_subdirectory(tests)
+  add_subdirectory(tests/cpp)
 endif()
