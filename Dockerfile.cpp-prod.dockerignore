@@ -1,0 +1,14 @@
+Dockerfile.cpp-dev-env
+Dockerfile.cpp-dev-env.dockerignore
+Dockerfile.cpp-prod
+Dockerfile.cpp-prod.dockerignore
+Dockerfile.spacy-ner
+Dockerfile.spacy-ner.dockerignore
+.git
+init.sql
+README.md
+src/python
+tests/python
+logo.jpeg
+compose.yaml
+.env
