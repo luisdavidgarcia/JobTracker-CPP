@@ -5,7 +5,9 @@
 In effort to leverage modern C++20 features and understand how to build
 REST API's with Boost. I have opted to replicate my 
 [JobTracker](https://github.com/luisdavidgarcia/JobTracker) application in
-C++20. 
+C++20, which is a locally hosted containerized Job Application management tool 
+for you to track your job applications in a Postgres Database instead of a 
+spreadsheet.
 
 I will be leveraging CMake for our build system, Docker for housing
 our PostgreSQL container and Ollama, and Clang for formatting and linting
@@ -16,22 +18,6 @@ our project.
 ### Prerequisites
 
 1.First and foremost install `Docker` on your system. Follow Docker's [instructions](https://docs.docker.com/engine/install/)
-- Docker
-- Docker Compose
-- Within these containers the following software will be included:
-  - C++20
-  - PostgreSQL
-  - Python 3.11+
-    - fastapi
-    - spacy
-    - uvicorn
-  - libpqxx
-  - clang
-  - cmake
-  - boost-devel
-  - libpq-devel
-  - gdb
-  - valgrind
 
 2.  Create a `.env` file in the project root with the following variables:
 
@@ -49,22 +35,17 @@ DATABASE_URL="postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:${DB
 To run JobTracker in Linux/MacOS run the following commands in your terminal:
 
 ```sh
-docker compose up -d \
-# To ensure none of the containers have "Exited"
-docker compose ps -a \
+# Get the production enviroment running
+make start-prod
 
-# Permits us to run the C++ Env in a Bash Shell
-docker exec -it cpp_dev_env /bin/bash \
+# Type the following to start the app:
+./build/Jobtracker
 
-mkdir build \
-cd build \
-cmake .. \
-cmake --build . \
+# When you are done and type 'n' to end the app, then type "exit":
+exit
 
-./JobTracker
-
-# Turn off and clean up all of the containers
-docker compose down
+# Clean up when you are done
+make clean-prod
 ```
 
 ## Structure
@@ -105,7 +86,11 @@ graph TD
 ├── CMakeLists.txt
 ├── compose.yaml
 ├── Dockerfile.cpp-dev-env
+├── Dockerfile.cpp-dev-env.dockerignore
+├── Dockerfile.cpp-prod
+├── Dockerfile.cpp-prod.dockerignore
 ├── Dockerfile.spacy-ner
+├── Dockerfile.spacy-ner.dockerignore
 ├── include
 │   ├── app
 │   │   └── JobTracker.hpp
@@ -113,11 +98,11 @@ graph TD
 │   │   └── JobApplication.hpp
 │   ├── db
 │   │   └── PostgresDatabaseManager.hpp
-│   ├── llm
-│   │   └── FastAPIClient.hpp
-│   └── utils
-│       └── EnvironmentConfig.hpp
+│   └── llm
+│       └── FastAPIClient.hpp
 ├── init.sql
+├── logo.jpeg
+├── Makefile
 ├── README.md
 ├── requirements.txt
 ├── src
@@ -130,35 +115,33 @@ graph TD
 │   │   │   └── PostgresDatabaseManager.cpp
 │   │   ├── llm
 │   │   │   └── FastAPIClient.cpp
-│   │   ├── main.cpp
-│   │   └── utils
-│   │       └── EnviromentConfig.cpp
+│   │   └── main.cpp
 │   └── python
 │       ├── main.py
 │       └── nlp_utils.py
 └── tests
-    ├── CMakeLists.txt
-    └── pasteJobDescription_test.cpp
+    └── cpp
+        ├── CMakeLists.txt
+        └── pasteJobDescription_test.cpp
 ```
 
 #### Core Files Explained Simply
 
-1. `src/cpp/app/JobTracker.cpp`: This is the main program which contains the core logic for
-    accepting pasted Job Applications, requesting the FastAPI backend to process it with Spacy,
-    and saving the returned parsed JSON data to the Postgres database.
-2. `src/cpp/data/JobApplication.cpp`: Contains the data structure that encapsulates a Job
-   Application with fields specified in `init.sql`
-3. `src/cpp/db/PostgresDatabaseManager.cpp`: Contains the libpqxx interface and logic to submit
-   parsed, JSON applications to the database
-4. `src/cpp/llm/FastAPIClient.cpp`: Serves as the backbone for creating POST requests to the
-   FastAPI backend to process raw plain text Job Application
-5. `src/cpp/utils/EnvrionmentConfig.cpp`: Parses your `.env` file for enviroment variables which
-   are used for interacting and setting up the database
-6. `src/python/main.py`: Creates the FastAPI backend which accepts POST requests and processes
-    them into formatted JSON Job Application objects with the Natural Language Processing (NLP)
-    utility `JobProcessor`
-7. `src/python/nlp_utils.py`: Homes the `JobProcessor` class that executes the parsing logic to
-    parse the raw plain text Job Application into a JSON format   
+1. `src/cpp/app/JobTracker.cpp`: This is the main program which contains the 
+    core logic for accepting pasted Job Applications, requesting the FastAPI 
+    backend to process it with Spacy, and saving the returned parsed JSON data 
+    to the Postgres database.
+2. `src/cpp/data/JobApplication.cpp`: Contains the data structure that 
+    encapsulates a Job Application with fields specified in `init.sql`
+3. `src/cpp/db/PostgresDatabaseManager.cpp`: Contains the libpqxx interface and 
+    logic to submit parsed, JSON applications to the database
+4. `src/cpp/llm/FastAPIClient.cpp`: Serves as the backbone for creating POST 
+    requests to the FastAPI backend to process raw plain text Job Application
+6. `src/python/main.py`: Creates the FastAPI backend which accepts POST 
+    requests and processes them into formatted JSON Job Application objects 
+    with the Natural Language Processing (NLP) utility `JobProcessor`
+7. `src/python/nlp_utils.py`: Homes the `JobProcessor` class that executes the 
+    parsing logic to parse the raw plain text Job Application into a JSON format   
 
 ## Resources
 
